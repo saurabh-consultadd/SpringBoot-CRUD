@@ -1,23 +1,23 @@
-package com.example.demo.entity;
+package com.example.demo.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "Product_Tbl")
-public class Product {
+public class MyUser {
+
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    private String name;
-    private int quantity;
-    private double price;
+    private String username;
+    private String password;
+    private String role;
 }

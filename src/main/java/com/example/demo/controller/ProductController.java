@@ -1,64 +1,119 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.Product;
-import com.example.demo.service.ProductService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.demo.model.Product;
+import com.example.demo.model.MyUserDetailService;
+import com.example.demo.service.ProductService;
+import com.example.demo.webtoken.JwtService;
+import com.example.demo.webtoken.LoginForm;
+
 
 @RestController
 public class ProductController {
+
     @Autowired
-    private ProductService service;
+    private AuthenticationManager authenticationManager;
 
+    @Autowired
+    private JwtService jwtService;
 
-//    Add one product
+    @Autowired
+    private MyUserDetailService myUserDetailService;
+
+    @Autowired
+    private ProductService per;
+
     @PostMapping("/addProduct")
-    public Product addProduct(@RequestBody Product product){
-        return service.saveProduct(product);
+    public void addProduct(@RequestBody Product product)
+    {
+        System.out.println(product);
+        per.saveProduct(product);
     }
-//    Add multiple products
-    @PostMapping("/addProducts")
-    public List<Product> addProducts(@RequestBody List<Product> products) {
-        return service.saveProducts(products);
+
+    @PostMapping("/admin/addProduct")
+    public void addProduct1(@RequestBody Product product)
+    {
+        System.out.println(product);
+        per.saveProduct(product);
+    }
+
+    @GetMapping("/admin/showProduct")
+    public List<Product> getAllUsers()
+    {
+        return per.getProduct();
+    }
+
+    @GetMapping("/user/showProduct")
+    public List<Product> getAllUsers1()
+    {
+        return per.getProduct();
+    }
+
+    @GetMapping("/home")
+    public String display()
+    {
+        return "<h1>Basic Home</h1>";
+    }
+
+    @GetMapping("/admin/home")
+    public String display1()
+    {
+        return "<h1>Admin Home</h1>";
+    }
+
+    @GetMapping("/user/home")
+    public String display2()
+    {
+        return "<h1>User Home</h1>";
+    }
+
+    @PostMapping("/authenticate")
+    public String authenticateAndGetToken(@RequestBody LoginForm loginForm)
+    {
+        Authentication authentication= authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                loginForm.username(), loginForm.password()
+        ));
+
+        if(authentication.isAuthenticated())
+        {
+            return jwtService.generateToken(myUserDetailService.loadUserByUsername(loginForm.username()));
+        }else{
+            throw new UsernameNotFoundException("Invalid Credentials");
+        }
     }
 
 
-//    Get all
-    @GetMapping("/products")
-    public List<Product> findAllProducts() {
-        return service.getProducts();
-    }
-//    Get by id
-    @GetMapping("/productById/{id}")
-    public Product findProductById(@PathVariable int id) {
-        return service.getProductById(id);
-    }
-//    Get by name
-    @GetMapping("/product/{name}")
-    public Product findProductByName(@PathVariable String name) {
-        return service.getProductByName(name);
+    @DeleteMapping("/admin/deleteProduct")
+    public void removeProduct(@RequestParam int id)
+    {
+        System.out.print("To be Deleted: "+id);
+        per.deleteProduct(id);
     }
 
-
-//    Update
-    @PutMapping("/update")
-    public Product updateProduct(@RequestBody Product product) {
-        return service.updateProduct(product);
+    @PutMapping("/admin/changeProduct")
+    public void putMethodName(@RequestBody Product product) {
+        System.out.println("Product Recieved: "+product);
+        per.changeProductData(product);
     }
 
-//    Delete
-    @DeleteMapping("/delete/{id}")
-    public String deleteProduct(@PathVariable int id) {
-        return service.deleteProduct(id);
-    }
-
-//    Patch
-    @PatchMapping("/patch/{id}")
-    public Product patchUpdate(@PathVariable int id, @RequestBody Map<String, Object> fields){
-//        System.out.println(fields);
-        return service.patchUpdate(id, fields);
+    @PatchMapping("/admin/updateProduct")
+    public void updateProduct(@RequestBody Product product) {
+        System.out.println(product);
+        per.updateProductData(product);
     }
 }
