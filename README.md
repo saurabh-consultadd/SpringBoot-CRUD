@@ -1,17 +1,10 @@
 
 # SpringBoot CRUD Operations
 
-This is a SpringBoot Application to perform all CRUD operations including PUT, POST, GET, GET ALL, DELETE and PATCH. It consists of an inventory system with products id, name, quantity and price columns.
-
-# Fields
-- id : unique product identifier
-- name : name of the product
-- quantity : product quantity
-- price : price of product
+A SpringBoot Application to perform all CRUD operations including PUT, POST, GET, GET ALL, DELETE and PATCH. It consists of an inventory system with different product fields which is stored in MYSQL database.
 
 ## Operations
 
-<br/><br/>
 ### 1. Add Product
 - Method : POST
 - Endpoint : /addProduct
