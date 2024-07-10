@@ -102,8 +102,7 @@ Authorization
 - Screenshot :
 <img width="1440" alt="authorization" src="https://github.com/saurabh-consultadd/SpringBoot-CRUD/assets/174772884/35d0790e-6155-4aa2-a263-99c2b028e70b">
 
-<br/>
-
+<br/><br/>
 2. Invalid User :
 - Method : GET
 - Endpoint : /user/showProduct
