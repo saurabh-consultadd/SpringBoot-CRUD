@@ -1,3 +1,8 @@
+# Spring Boot Application
+
+## Table of Contents
+- [CRUD Operations](#CRUD Operations)
+- [JWT Implementation](#JWT Implementation)
 
 # CRUD Operations
 
@@ -51,8 +56,7 @@ A SpringBoot Application to perform all CRUD operations including PUT, POST, GET
 - Screenshot :
 <img width="1440" alt="13-PatchReqUpdate" src="https://github.com/saurabh-consultadd/SpringBoot-CRUD/assets/174772884/b2c50223-3fbf-43a3-aae7-ced9ce300948">
 
-<br/>
-
+<br/><br/>
 # JWT Implementation
 
 JWT(JSON Web Token) is used for securely transmitting information between parties as a JSON object. It consist of following three parts:
