@@ -117,4 +117,7 @@ JWT(JSON Web Token) is used for securely transmitting information between partie
 # Frontend Using React <a name="react"></a>
 
 This project also has frontend part been implemented using ReactJS which perform all the operations.
+
+<br/>
+
 Click on the [LINK](https://github.com/saurabh-consultadd/React-Project) to visit the repository.
